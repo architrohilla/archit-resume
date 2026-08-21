@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,21 @@ jobs:
           echo "Files in repository:"
           ls -la
 
-      - name: Validate resume files
+      - name: Validate required files
         run: |
           test -f index.html
           test -f style.css
-          echo "Resume files exist!"
+          echo "Required resume files exist"
 
-      - name: Build successful
-        run: echo "Resume CI completed successfully!"
+      - name: Install HTML validator
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tidy
+
+      - name: Validate HTML
+        run: |
+          tidy -errors -quiet index.html
+
+      - name: Validation successful
+        run: |
+          echo "Resume validation completed successfully"
