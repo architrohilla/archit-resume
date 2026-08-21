@@ -1,0 +1,28 @@
+name: Resume CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Show repository files
+        run: |
+          echo "Files in repository:"
+          ls -la
+
+      - name: Validate resume files
+        run: |
+          test -f index.html
+          test -f style.css
+          echo "Resume files exist!"
+
+      - name: Build successful
+        run: echo "Resume CI completed successfully!"
