@@ -1,0 +1,202 @@
+/* 
+  Archit Rohilla — HTML Resume
+  Edit content in index.html and presentation in this file.
+*/
+
+:root {
+  --text: #202124;
+  --muted: #5f6368;
+  --line: #d9dce1;
+  --accent: #1f4b99;
+  --page-width: 900px;
+  --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #f4f5f7;
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.45;
+}
+
+.resume {
+  width: min(var(--page-width), calc(100% - 32px));
+  margin: 32px auto;
+  padding: 48px 56px;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 22px;
+  border-bottom: 2px solid var(--text);
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: .04em;
+}
+
+.headline {
+  margin: 5px 0 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  font-size: 13px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+.placeholder-link { opacity: .65; }
+
+section { margin-top: 25px; }
+
+h2 {
+  margin: 0 0 10px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  letter-spacing: .12em;
+  border-bottom: 1px solid var(--line);
+}
+
+h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+p { margin: 5px 0; }
+
+.company {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.experience { margin-bottom: 20px; }
+
+.role-row,
+.education-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.date,
+.education-row > span {
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+ul {
+  margin: 7px 0 0;
+  padding-left: 20px;
+}
+
+li {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.skills span {
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+article + article { margin-top: 16px; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Print / PDF */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #fff;
+    font-size: 10pt;
+  }
+
+  .resume {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .header {
+    break-inside: avoid;
+  }
+
+  section, article {
+    break-inside: avoid;
+  }
+
+  footer {
+    display: none;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@media (max-width: 700px) {
+  .resume {
+    width: 100%;
+    margin: 0;
+    padding: 28px 22px;
+  }
+
+  .header,
+  .role-row,
+  .education-row {
+    flex-direction: column;
+  }
+
+  .contact {
+    align-items: flex-start;
+  }
+
+  .date,
+  .education-row > span {
+    white-space: normal;
+  }
+}
