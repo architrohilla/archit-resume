@@ -13,11 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Show repository files
-        run: |
-          echo "Files in repository:"
-          ls -la
-
       - name: Validate required files
         run: |
           test -f index.html
@@ -33,6 +28,36 @@ jobs:
         run: |
           tidy -errors -quiet index.html
 
-      - name: Validation successful
+  generate-pdf:
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Chromium
         run: |
-          echo "Resume validation completed successfully"
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
+
+      - name: Generate PDF
+        run: |
+          chromium \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --print-to-pdf=resume.pdf \
+            file://${{ github.workspace }}/index.html
+
+      - name: Verify PDF
+        run: |
+          test -f resume.pdf
+          ls -lh resume.pdf
+          echo "PDF generated successfully"
+
+      - name: Upload resume PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdf
+          path: resume.pdf
