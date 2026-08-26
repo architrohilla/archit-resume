@@ -47,6 +47,7 @@ jobs:
             --headless \
             --no-sandbox \
             --disable-gpu \
+            --no-pdf-header-footer \
             --print-to-pdf=resume.pdf \
             file://${{ github.workspace }}/index.html
 

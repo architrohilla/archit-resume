@@ -161,12 +161,28 @@ footer {
     box-shadow: none;
   }
 
-  .header {
+  /* Don't split these small logical blocks */
+  .header,
+  .role-row,
+  .education-row {
     break-inside: avoid;
   }
 
-  section, article {
+  /*
+   * A job can stay together when possible,
+   * but an entire SECTION must be allowed to span pages.
+   */
+  article {
     break-inside: avoid;
+  }
+
+  section {
+    break-inside: auto;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
   }
 
   footer {
