@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -58,7 +63,48 @@ jobs:
           echo "PDF generated successfully"
 
       - name: Upload resume PDF
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: resume-pdf
           path: resume.pdf
+  
+  deploy:
+    needs: generate-pdf
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Download generated PDF
+        uses: actions/download-artifact@v6
+        with:
+          name: resume-pdf
+          path: .
+
+      - name: Verify deployment files
+        run: |
+          echo "Files being deployed:"
+          ls -lah
+
+          test -f index.html
+          test -f style.css
+          test -f resume.pdf
+
+          echo "All deployment files are present"
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
